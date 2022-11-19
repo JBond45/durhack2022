@@ -27,7 +27,40 @@ init python:
                 return options[ord(reply[-2]) - 65]
 
         return "They stare at you blankly. You started talking but you never opened your mouth."
-        
+
+    def printInput(given = ""):
+        done = False
+        while not done:
+            inp = renpy.input("Could you print that for me?")
+            if inp[:6] == "print(" and inp[-1] == ")":
+                if len(given) > 0:
+                    if inp[6:-1] == given:
+                        done = True
+
+                    else:
+                        e("Umm... I asked for [given].")
+                else:
+                    done = True
+
+            else:
+                e("hmm... you started talking but never opened your mouth.")
+
+    def consoleInput(inp, given = ""):
+        done = False
+        while not done:
+            inp = renpy.input("Could you console.log that for me?")
+            if inp[:12] == "console.log(" and inp[-2:] == ");":
+                if len(given) > 0:
+                    if inp[12:-2] == given:
+                        done = True
+
+                    else:
+                        e("Umm... I asked for [given].")
+                else:
+                    done = True
+
+            else:
+                e("hmm... you started talking but never opened your mouth.")
 
 
 # The game starts here.
@@ -52,6 +85,7 @@ label start:
 
     e "Once you add a story, pictures, and music, you can release it to the world!"
     
+    # choose talking options
     python:
         output = talkToPy("Wow, its so beautiful today...", "I love the colour of this carpet.")
     "[output]"
@@ -68,9 +102,10 @@ label start:
             if len(inpList) > 1 and inpList[0] == "favourite_drink":
                 # if correct quotation marks
                 if inpList[1][-1] == inpList[1][0] and inpList[1][0] == '''"''':
-                    # defined a variable correctly - end loop
-                    output = "Oooo nice, I think {0} is my great aunt C's favourite.".format(inpList[1].strip())
-                    rightFormat = True
+                        printInput("favourite_drink")
+                        # end of loop
+                        output = "Oooo nice, I think {0} is my great aunt C's favourite.".format(inpList[1].strip())
+                        rightFormat = True
 
                 else:
                     output = """You started talking but didn't produce any sound... why not try using quotation marks (") around the message?"""
@@ -92,7 +127,7 @@ label start:
             else:
                 e("I don't understand - that doesn't sound like the integer I was expecting.")
 
-        e("let spend = [inp]")
+        e("let spend = [inp];")
         if int(inp) < 5:
             e("Dont worry... Ill pay for you.")
         else:
@@ -108,6 +143,7 @@ label start:
                     stringList = inpList.split(",")
                     stringChecker = [checkStr(x.strip()) for x in stringList]
                     if False not in stringChecker:
+                        consoleInput("my_list")
                         e("Great! \nHi, I'd like a latte, and my friend will have a coffee with {0}".format(inpList))
                         correctType = True
 
@@ -122,6 +158,7 @@ label start:
                     stringList = inpList.split(",")
                     stringChecker = [checkStr(x.strip()) for x in stringList]
                     if False not in stringChecker:
+                        printInput("my_list")
                         e("Great! \nHi, I'd like a latte, and my friend will have a coffee with {0}".format(inpList))
                         correctType = True
 
