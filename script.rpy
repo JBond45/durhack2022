@@ -147,11 +147,11 @@ label start:
 
 
 label firstjs_coffee:
-    scene bg mcstill
+    scene bg compscicafe
     show js normal at right
     j "hey I'm JavaScript.....You want to grab a drink with me? Ok, lets go"
 label js_coffee:
-    scene bg mcstill
+    scene bg compscicafe
     show js normal at right
     j "Here we are at the front of the queue"
     python:
@@ -188,11 +188,11 @@ label js_coffee:
 
 
 label Firstpy_coffee:
-    scene bg mcstill
+    scene bg compscicafe
     show py happy at right
     p "hey I'm Python.....You want to come sit with me and chat?"
 label py_coffee: 
-    scene bg mcstill
+    scene bg compscicafe
     show py happy at right
     p "ok, lets grab a drink first!"
 
