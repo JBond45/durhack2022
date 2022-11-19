@@ -56,7 +56,7 @@ init python:
     def consoleInput(inp, given = ""):
         done = False
         while not done:
-            inp = renpy.input("Could you console.log that for me?")
+            inp = renpy.input("Can you put that in the console so I can hear you? Try console.log and put the variable you just defined in.")
             if inp[:12] == "console.log(" and inp[-2:] == ");":
                 if len(given) > 0:
                     if inp[12:-2] == given:
@@ -85,8 +85,8 @@ label start:
     
     scene bg compscicafe
     with Dissolve(.5)
-    "You take the last sip of your coffee, You're at Durhack"
-    "Maybe that was a bit to much caffine, you start to feel wierd....."
+    "You take the last sip of your 50th cup of coffee, You're at Durhack"
+    "Maybe that was a bit too much caffine, you start to feel weird....."
     
     scene bg black
     with Dissolve(.5)
@@ -97,7 +97,7 @@ label start:
     show scratch happy
     s "Meow"
     hide scratch Happy
-    "The cat (guy?) dashes off, huh, guess you should follow them"
+    "The cat (guy?) dashes off, huh, guess you should follow them into the MCS cafe"
     scene bg compscicafe
     with Dissolve(.5)
     show py happy at right
@@ -167,7 +167,7 @@ label js_coffee:
                 j("I don't understand - that doesn't sound like the integer I was expecting.")
                 
         if int(inp) < 5:
-            j("Dont worry... Ill pay for you.")
+            j("Dont worry... I will pay for you.")
         else:
             j("Great! Let's get coffee together.")
                 # javascript doing lists
