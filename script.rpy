@@ -43,10 +43,10 @@ label start:
     "There are two people in the MCS cafe currently, Who do you want to talk to?"
     menu:
         "The Girl":
-            jump Intro_js
+            jump js_coffee#Intro_js
         
         "The Guy":
-            jump Intro_py
+            jump py_coffee#Intro_py
 
     label Intro_py:
         hide js
@@ -67,22 +67,23 @@ label start:
 
 label js_coffee:
     scene bg MCSTill
-    show js nuetral at right
-    
+    show js neutral at right
+    "j""sup"
+    python:
         # javascript asking how much you want to spend
         correctType = False
         while not correctType:
-            inp = renpy.input("How much do you have to spend? Tell me in whole numbers, like an integer. No decimals.")
+        inp = renpy.input("How much do you have to spend? Tell me in whole numbers, like an integer. No decimals.")
             if inp.isdigit():
                 # if is an integer
                 correctType = True
             else:
-                e("I don't understand - that doesn't sound like the integer I was expecting.")
+                j("I don't understand - that doesn't sound like the integer I was expecting.")
                 
         if int(inp) < 5:
-            e("Dont worry... Ill pay for you.")
+            j("Dont worry... Ill pay for you.")
         else:
-            e("Great! Let's get coffee together.")
+            j("Great! Let's get coffee together.")
 
 
 label py_coffee:
