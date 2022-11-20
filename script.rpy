@@ -278,12 +278,165 @@ label py_coffee:
         
     p "The energy is really quite something... So many people coding; creating! Do you know this feeling? This breeze of passion, which has traveled from the innovations towards which I am advancing, gives me a foretaste of those icy logical climes..."
     show py flustered at right
-    p "Inspirited by this wind of promise, my capabilities and compatabilities become more fervent and vivid. I try in vain to be persuaded that the people are the seat of frost and desolation; it ever presents itself to my imagination as the region of beauty and delight."
+    p "Inspirited by this wind of promise, my capabilities and compatabilities become more fervent and vivid."
+    p "I try in vain to be persuaded that the people are the seat of frost and desolation; it ever presents itself to my imagination as the region of beauty and delight."
     p "There, in the people here, the sun is forever visible, its broad disk just skirting the horizon and diffusing a perpetual splendour of coding mania!"
     p "Oh sorry... I got a little carried away there. I'm just really passionate about hackathons I guess."
 
     jump end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #scratch fight scene attempt
+
+
+
+
+
+init python:
+    class fighter:
+        def __init__(self, name, level = 1, max_hp = 10, hp = 10, max_mp = 4, mp = 4, initiative = 0, element = "None", element_attack = "Sword", attack = 0):
+            self.name = name
+            self.level = 1
+            self.max_hp = max_hp
+            self.hp = hp
+            self.max_mp = max_mp
+            self.mp = mp
+            self.initiative = initiative
+            self.element = element
+            self.element_attack = element_attack
+            self.attack = attack
+
+label class_sample:
+    $ p1 = fighter("Player 1")
+    $ p1 = fighter("Player 2", 2, 12, 12, 8, 8)
+    $ skeleton = fighter("Halberd Skeleton", 1, 12, 12, 0, 0)
+    $ skeleton_fire = fighter("Fire Skeleton", 1, 12, 12, 0, 0, 0, "Fire", "Fire")
+    $ skeleton_water = fighter("Water Skeleton", 1, 12, 12, 0, 0, 0, "Water", "Water")
+    $ skeleton_grass = fighter("Grass Skeleton", 1, 12, 12, 0, 0, 0, "Grass", "Grass")
+
+label sample:
+    $ player_max_hp = 10
+    $ player_hp = player_max_hp
+    $ player_max_mp = 4
+    $ player_mp = player_max_mp
+    $ player_level = 1
+
+    $ player2_max_hp = 12
+    $ player2_hp = player2_max_hp
+    $ player2_max_mp = 8
+    $ player2_mp = player2_max_mp
+    $ player2_level = 2
+
+    $ player_current = 1
+    $ player_element = "Sword"
+    $ player_attack_value = 0
+
+    $ enemy_max_hp = 12
+    $ enemy_hp = enemy_max_hp
+    $ enemy_fire_hp = enemy_max_hp
+    $ enemy_water_hp = enemy_max_hp
+    $ enemy_grass_hp = enemy_max_hp
+    $ enemy_attack_value = 0
+    $ enemy_element = "Halberd"
+    $ enemies_turn = 0
+
+label sample2:
+
+    $ p1.hp -= 2
+
+
+label camera_playerattack:
+    camera:
+        ease 0.5 matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-657.0, -549.0, -9.0)*RotateMatrix(-9.0, 0.0, -9.0) 
+        easeout 10.0 matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-405.0, -684.0, 342.0)*RotateMatrix(0.0, -9.0, -9.0)
+    return
+
+label camera_knight_attack:
+    show knight attack:
+        matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(1539.0, 1017.0, 288.0)*RotateMatrix(0.0, 18.0, 0.0) 
+        easeout 1.0 matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(729.0, 1017.0, 288.0)*RotateMatrix(0.0, 18.0, 0.0) 
+
+    show skeleton hit
+
+    camera:
+        matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-405.0, -684.0, 99.0)*RotateMatrix(0.0, 9.0, 0.0) 
+        easein 0.2 matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-1368.0, -684.0, -279.0)*RotateMatrix(-9.0, -9.0, 0.0) 
+        easein 10.0 subpixel True matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-1395.0, -702.0, -252.0)*RotateMatrix(0.0, -9.0, 0.0) 
+    return
+
+label camera_knight_win:
+    camera:
+        subpixel True matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-504.0, -702.0, -189.0)*RotateMatrix(9.0, 0.0, 0.0) 
+        easein 10.0 subpixel True matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-504.0, -702.0, 72.0)*RotateMatrix(9.0, 0.0, 0.0) 
+    return
+
+label camera_skeleton_attack:
+    show skeleton attack:
+        matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(981.0, 774.0, 351.0)*RotateMatrix(0.0, -18.0, 0.0)
+        easeout 1.0 matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(2016.0, 774.0, 351.0)*RotateMatrix(0.0, -18.0, 0.0) 
+    show knight hit
+    $ player_hp -= 2
+    camera:
+        subpixel True matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-1395.0, -702.0, -252.0)*RotateMatrix(0.0, -9.0, 0.0) 
+        easein 0.2  matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-504.0, -702.0, 45.0)*RotateMatrix(-9.0, 0.0, 0.0) 
+        easein 10.0 matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-504.0, -702.0, 189.0)*RotateMatrix(-9.0, 0.0, 0.0) 
+    return
+
+label camera_knight_died:
+    camera:
+        subpixel True matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-1503.0, -621.0, 117.0)*RotateMatrix(369.0, 9.0, 0.0) 
+        easein 0.1 subpixel True matrixtransform ScaleMatrix(1.0, 1.0, 1.0)*OffsetMatrix(-1503.0, -621.0, 558.0)*RotateMatrix(369.0, 9.0, 0.0)
+    return
+    label simple_battle_graphics:
+
+    $ player_hp = player_max_hp
+    $ enemy_hp = enemy_max_hp
+
+    show screen hp_bars_1v1
+
+    while player_hp > 0:
+
+        # Player Turn
+        call camera_playerattack
+        menu:
+            "Attack":
+                call camera_knight_attack
+                $ enemy_hp -= 2
+                "That's a strong hit!  Enemy has [enemy_hp] hp!"
+
+                if enemy_hp <= 0:
+                    call camera_knight_win
+                    "You win the combat encounter!"
+                    jump simple_graphic
+            "Don't Attack":
+                "You don't attack..."
+
+        # Enemy Turn
+        call camera_skeleton_attack
+        "The Enemy makes an attack, reducing you to [player_hp] hp!"
+
+    call camera_knight_died
+    "You died..."
+
+    hide screen hp_bars_1v1
+    menu simple_graphic:
+        "Play this level again?":
+            jump simple_battle_graphics
+        "Back to Main Menu":
+            jump start
 
     # This ends the game.
 label end:
