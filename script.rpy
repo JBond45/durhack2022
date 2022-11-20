@@ -52,7 +52,7 @@ init python:
                     done = True
 
             else:
-                p("hmm... you started talking but never opened your mouth.")
+                p("hmm... you started talking but never opened your mouth. Did you use print(x) and write the variable name in the brackets?")
 
     def consoleInput(inp, given = ""):
         done = False
@@ -103,7 +103,7 @@ label start:
     scene bg onground
     with Dissolve(.5)
     "You wake up."
-    "You feel... a warm paw touching your face. It tickles."
+    "Someone is standing over you."
     play music "music/scratch.wav"
 
     show scratch happy
@@ -218,10 +218,11 @@ label js_coffee:
                         correctType = True
                     else:
                         j("I couldn't hear you? You were mumbling.;")
+                else:
+                    j("Um, I don't know a variable named like that... did you remember to use 'let' to define a new variable?")
 
-                j("Um, I don't know a variable named like that... did you remember to use 'let' to define a new variable?")
-
-            j("Did you forget your semicolon?;")
+            else:
+                j("Did you forget your semicolon?;")
 
     j "This was nice, but I've got to go now. Durhack waits for no one."
 
@@ -282,6 +283,9 @@ label py_coffee:
                 else:
                     p("That's not the list I expected, is your syntax alright?")
 
+    hide py happy
+    show py sitting:
+        xpos 0.65 ypos 0.0
     p "So, have you come here for durhack?"
     menu:
         "answer = 'Yeah, I did?'":
@@ -290,146 +294,26 @@ label py_coffee:
 
         "answer = 'No, I came for free food.'":
             console "print(answer)"
+            hide py sitting at center
             show py sad at right
             p "Oh... well I suppose that is a noble cause."
             p "You know, maybe you should consider joining in. Even if you've never coded before, there's so many chances here to learn!"
         
     p "The energy is really quite something... So many people coding; creating! Do you know this feeling? This breeze of passion, which has traveled from the innovations towards which I am advancing, gives me a foretaste of those icy logical climes..."
-    show py flustered at right
+    hide py sitting at center
+    show py flustered at center
     p "Inspirited by this wind of promise, my capabilities and compatabilities become more fervent and vivid. I try in vain to be persuaded that the people are the seat of frost and desolation; it ever presents itself to my imagination as the region of beauty and delight."
     p "There, in the people here, the sun is forever visible, its broad disk just skirting the horizon and diffusing a perpetual splendour of coding mania!"
     p "Oh sorry... I got a little carried away there. I'm just really passionate about hackathons I guess."
     show py sad at center
-    p "Rattle snakes! Is that the time? I've got to get hacking. I'll see you around. Let me just steal your coffee"
+    p "Rattle snakes! Is that the time? I've got to get hacking. I'll see you around."
     hide py sad at center
     with moveoutright
 
     jump end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #scratch fight scene attempt
-
-
-
-
-
-screen simple_stats_screen:
-    frame:
-        xalign 0.01 yalign 0.05
-        xminimum 220 xmaximum 220
-        vbox:
-            text u size 22 xalign 0.5
-            null height 5
-            hbox:
-                bar:
-                    xmaximum 130
-                    value red_hood_hp
-                    range red_hood_max_hp
-                    left_gutter 0
-                    right_gutter 0
-                    thumb None
-                    thumb_shadow None
-                    
-                null width 5
-                
-                text "[red_hood_hp] / [red_hood_max_hp]" size 16
-                
-                
-    frame:
-        xalign 0.99 yalign 0.05
-        xminimum 220 xmaximum 220
-        vbox:
-            text p size 22 xalign 0.5
-            null height 5
-            hbox:
-                bar:
-                    xmaximum 130
-                    value wolf_hp
-                    range wolf_max_hp
-                    left_gutter 0
-                    right_gutter 0
-                    thumb None
-                    thumb_shadow None
-                    
-                null width 5
-                
-                text "[wolf_hp] / [wolf_max_hp]" size 16
-                
-    text "Get your coffee back from Python by using the Python variables you learned!" xalign 0.5 yalign 0.05 size 30
-                
-# The game starts here.
-label battle_init:
-    #### Some variables that describes the game state.
-    $ wolf_max_hp = 20
-    $ red_hood_max_hp = 30
-    $ wolf_hp = wolf_max_hp
-    $ red_hood_hp = red_hood_max_hp
-    $ cookies_left = 3
-    
-    scene black
-    
-    "Suddenly {p} takes your coffee"
-    jump battle_1_loop
-
-
-label battle_1_loop:
-    
-    #### Let's show the game screen.
-    #
-    show screen simple_stats_screen
-    
-    #### The game loop.
-    # It will exist till both enemies have more than 0 hp.
-    #
-    while (wolf_hp > 0) and (red_hood_hp > 0):
-        
-        menu:
-            "ATTACK\nPython_health -= 5":
-                $ wolf_hp -= 5
-                u "print('take that you theiving fiend!)"
-                
-            "HEAL\nSip_coffee = (got [cookies_left] sips left)" if cookies_left > 0:
-                $ red_hood_hp = min(red_hood_hp+5, red_hood_max_hp)
-                $ cookies_left -= 1
-                u "print('Mmm, tasty...')"
-        
-        $ wolf_damage = renpy.random.randint(1, 6)
-        
-        $ red_hood_hp -= wolf_damage
-        
-        p "Ouch! My health variable is going down because you are using {b}-={/b} (damage dealt - [wolf_damage]hp)"
-    #
-    ####        
-        
-    hide screen simple_stats_screen
-    
-    if wolf_hp <= 0:
-        if red_hood_hp <= 0:
-            "Double KO"
-            
-        else:
-            u "print('yes I won!')"
-            u "print('I feel like I understand variables in python now')"
-            "(grandmother got [cookies_left] cookies)"
-            
-    else:
-        p "The coffee 'variable == mine' is True!"
-    
-    jump battle_1_ending
-        
-label battle_1_ending:
-    "The end."
+    # This ends the game.
+label end:
+    "Were those programming languages? Am I in the Durhack Universe?! I thought that was a myth!"
     return
