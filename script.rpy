@@ -12,6 +12,7 @@ define p = Character('Python', color="#306998")
 define j = Character('JavaScript', color="#F0DB4F")
 define s = Character('Scratch', color= "#f6ab3c")
 define u = Character('You')
+define console = Character('Console', color="#FFFFFF")
 
 init python:
     def checkStr(given):
@@ -93,21 +94,25 @@ label start:
     "This doesn't feel like a normal nap... In fact it feels like a whole new world. Will you say hello to this world?"
     menu:
         "answer = True":
+            console "print(answer)"
             $ renpy.input("", default="Hello world.")
         "answer = False":
-            ""
+            console "print(answer)"
 
     
     scene bg onground
     with Dissolve(.5)
     "You wake up."
     "You feel... a warm paw touching your face. It tickles."
+    play music "music/scratch.wav"
+
     show scratch happy
     s "Meow"
     scene bg offground
     "The cat (guy?) dashes off, huh, guess you should follow them back into the MCS cafe. Maybe they've started serving the food."
     scene bg compscicafe
     with Dissolve(.5)
+    play music 'music/coffeeDate.wav'
     show py happy at right
     show js normal at left
     "This is definitely the Cafe you know and love, but where were all the people? There's only two here, and they both look like they've jumped out of Coolors.com."
@@ -139,8 +144,10 @@ label start:
         p "Would you like to come get a coffee with me?"
         menu:
             "answer = 'yes'":
+                console "print(answer)"
                 jump py_coffee
             "answer = 'no, in fact I wanna go with the girl over there'":
+                console "print(answer)"
                 p "That's alright! You'll have a chance to meet me properly soon enough anyway."
                 jump firstjs_coffee
 
@@ -149,7 +156,7 @@ label start:
     label Intro_js:
         hide py happy
         show js normal at center
-        j "Sup. What's ya name?;"
+        j "Sup. What's ya name variable?;"
         python:
             name = renpy.input("")
         j "[name], huh, I'm JavaScript;"
@@ -157,18 +164,24 @@ label start:
         j "Wanna get a drink?;"
         menu:
             "let answer = 'yes';":
+                console "console.log(answer);"
                 jump js_coffee
             "let answer = 'no, in fact I wanna go with the guy over there';":
-                show js crying at center
+                show js displeased at center
+                console "console.log(answer);"
                 j "Oh... okay. It's not like I was going to ask you to give me a list of your favourite webpage coffee attributes or anything.;"
                 jump Firstpy_coffee
 
 
 
 label firstjs_coffee:
-    scene bg compscicafe
-    show js normal at right
-    j "hey I'm JavaScript.....You want to grab a drink with me? Ok, lets go;"
+    hide py happy at center
+    show js normal at center
+    j "Sup. What's ya name variable?;"
+    python:
+        name = renpy.input("")
+    j "[name], huh, I'm JavaScript;"
+    "{i}(JavaScript? Like the programming language? WHAT HAPPENED?!){/i}"
 
 label js_coffee:
     scene bg compscicafe
@@ -209,6 +222,9 @@ label js_coffee:
                 j("Um, I don't know a variable named like that... did you remember to use 'let' to define a new variable?")
 
             j("Did you forget your semicolon?;")
+
+    j "This was nice, but I've got to go now. Durhack waits for no one."
+
     jump end
     
 
@@ -269,22 +285,29 @@ label py_coffee:
     p "So, have you come here for durhack?"
     menu:
         "answer = 'Yeah, I did?'":
+            console "print(answer)"
             p "Nice! I've come here every year since Durhack started."
 
         "answer = 'No, I came for free food.'":
+            console "print(answer)"
             show py sad at right
             p "Oh... well I suppose that is a noble cause."
             p "You know, maybe you should consider joining in. Even if you've never coded before, there's so many chances here to learn!"
         
     p "The energy is really quite something... So many people coding; creating! Do you know this feeling? This breeze of passion, which has traveled from the innovations towards which I am advancing, gives me a foretaste of those icy logical climes..."
-    show py flustered at right
+    show py flustered at center
     p "Inspirited by this wind of promise, my capabilities and compatabilities become more fervent and vivid. I try in vain to be persuaded that the people are the seat of frost and desolation; it ever presents itself to my imagination as the region of beauty and delight."
     p "There, in the people here, the sun is forever visible, its broad disk just skirting the horizon and diffusing a perpetual splendour of coding mania!"
     p "Oh sorry... I got a little carried away there. I'm just really passionate about hackathons I guess."
+    show py sad at center
+    p "Rattle snakes! Is that the time? I've got to get hacking. I'll see you around."
+    hide py sad at center
+    with moveoutright
 
     jump end
 
 
     # This ends the game.
 label end:
+    "Were those programming languages? Am I in the Durhack Universe?! I thought that was a myth!"
     return
